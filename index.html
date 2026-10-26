@@ -11,9 +11,9 @@
 <body>
 
     <!-- เล่นเพลง MP3 เบื้องหลัง -->
-<audio id="bg-music" loop preload="auto">
-    <source src="song.mp3" type="audio/mpeg">
-</audio>
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- ================= Step 1: หน้าจอใส่รหัส PIN ================= -->
     <div id="pin-screen" class="screen active">
@@ -30,17 +30,45 @@
         </div>
     </div>
 
-    <!-- ================= Step 2: น้องแมวไกด์เดินเข้าฉาก ================= -->
+    <!-- ================= Step 2: น้องแมวไกด์เดินเข้าฉาก & บทสนทนา ================= -->
     <div id="main-content" class="screen hidden">
         <div class="cat-wrapper">
-            <!-- กล่องข้อความคำพูดน้องแมว (ซ่อนไว้ก่อนตอนเดินเข้า) -->
+            <!-- กล่องคำพูดน้องแมว -->
             <div id="speech-bubble" class="speech-bubble hidden">
                 <p id="cat-text"></p>
                 <button id="next-btn" class="next-btn" onclick="nextDialogue()">กดเพื่อไปต่อ ✨</button>
             </div>
             
-            <!-- รูปภาพน้องแมว (เรียกใช้ cat-walk1 เป็นตัวตั้งต้น) -->
             <img id="cat-avatar" src="cat-walk1.png" alt="Cat Mascot" class="cat-img">
+        </div>
+    </div>
+
+    <!-- ================= Step 3: เปิดกล่องของขวัญ & น้องแมวไกด์ ================= -->
+    <div id="gift-screen" class="screen hidden">
+        <div class="gift-scene-container">
+            
+            <!-- ส่วนของกล่องของขวัญ -->
+            <div class="gift-wrapper">
+                <!-- กรอบข้อความบนกล่องของขวัญ -->
+                <div id="box-speech-bubble" class="box-speech-bubble hidden">
+                    <p id="box-cat-text">🎉 Happy Anniversary นะครับ! ❤️</p>
+                    <button id="gift-next-btn" class="next-btn hidden" onclick="goToNextStep()">ไปดูความทรงจำกัน ✨</button>
+                </div>
+
+                <div id="gift-box" class="gift-box" onclick="openGift()">
+                    <img id="gift-img" src="gift-closed.png" alt="Gift Box">
+                </div>
+            </div>
+
+            <!-- น้องแมวไกด์ยืนอยู่ด้านข้าง -->
+            <div id="cat-guide-container" class="cat-guide-container">
+                <div id="cat-speech-bubble" class="speech-bubble">
+                    <p>กดที่กล่องของขวัญสิ 🎁</p>
+                </div>
+                <!-- ขยายขนาดแมวในหน้านี้ให้ใหญ่ขึ้นนิดหน่อย -->
+                <img id="cat-character" src="cat-stand1.png" alt="Cat Guide" style="width: 140px;">
+            </div>
+
         </div>
     </div>
 

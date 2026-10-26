@@ -7,7 +7,6 @@
 }
 
 body {
-    /* โทนสีพื้นหลัง: ชมพูพาสเทลอ่อนอมขาว ผสมฟ้าจางๆ ตามธีม */
     background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 50%, #E0F7FA 100%);
     color: #5D4037;
     min-height: 100vh;
@@ -138,7 +137,6 @@ body {
     position: absolute;
     bottom: 10%;
     left: 50%;
-    /* ตำแหน่งเริ่มต้น: อยู่นอกจอด้านขวา และจัดกึ่งกลางแนวนอน */
     transform: translateX(100vw);
     display: flex;
     flex-direction: column;
@@ -148,7 +146,7 @@ body {
 }
 
 .cat-img {
-    width: 200px; /* ขยายขนาดตัวน้องแมวให้ใหญ่เด่นชัดขึ้น */
+    width: 200px;
     height: auto;
     user-select: none;
     mix-blend-mode: darken;
@@ -175,7 +173,6 @@ body {
     pointer-events: none;
 }
 
-/* สามเหลี่ยมชี้ลงมาที่หัวน้องแมว */
 .speech-bubble::after {
     content: '';
     position: absolute;
@@ -197,21 +194,177 @@ body {
     min-height: 48px;
 }
 
+/* ปุ่มทั่วไป */
 .next-btn {
-    margin-top: 12px;
-    padding: 8px 20px;
-    background: #FF69B4;
+    opacity: 1 !important;
+    transform: none !important;
+    display: inline-block !important;
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
     color: white;
     border: none;
+    padding: 10px 20px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+    margin-top: 10px;
     transition: transform 0.2s, background 0.2s;
 }
 
 .next-btn:hover {
     background: #FF1493;
     transform: scale(1.05);
+}
+
+/* ------------------- Step 3: Gift Scene ------------------- */
+#gift-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: #fff0f5;
+}
+
+.gift-scene-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+}
+
+.gift-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gift-wrapper.zoom-in {
+    transform: scale(1.15) translateY(-15px);
+}
+
+/* กรอบข้อความบนกล่องของขวัญ */
+.box-speech-bubble {
+    position: absolute;
+    bottom: 175px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+    text-align: center;
+    width: 280px;
+    z-index: 10;
+    border: 2px solid #ffb6c1;
+    animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.box-speech-bubble.hidden {
+    display: none;
+}
+
+.box-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 12px 12px 0;
+    border-style: solid;
+    border-color: #ffb6c1 transparent;
+    display: block;
+    width: 0;
+}
+
+.box-speech-bubble p {
+    font-size: 0.95rem;
+    color: #D81B60;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+@keyframes popUp {
+    0% { opacity: 0; transform: scale(0.5) translateY(15px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ปุ่มในกล่องข้อความบนกล่อง (ซ่อนไว้สนิทตั้งแต่ตอนแรก) */
+#gift-next-btn {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+}
+
+#gift-next-btn.hidden {
+    display: none !important;
+}
+
+#gift-next-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+    display: inline-block !important;
+}
+
+/* กล่องของขวัญ */
+.gift-box {
+    cursor: pointer;
+    animation: wiggle 1.8s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.gift-box img {
+    width: 150px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-5deg); }
+    40% { transform: rotate(5deg); }
+    60% { transform: rotate(-3deg); }
+    80% { transform: rotate(3deg); }
+}
+
+.gift-box.opened {
+    animation: none;
+    cursor: default;
+}
+
+/* น้องแมวไกด์ประจำการข้างกล่อง */
+.cat-guide-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+#cat-speech-bubble {
+    margin-bottom: 10px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    white-space: nowrap;
+    border: 2px solid #ffb6c1;
+    animation: floatBubble 2s ease-in-out infinite;
+}
+
+#cat-speech-bubble.hidden {
+    display: none;
+}
+
+@keyframes floatBubble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
