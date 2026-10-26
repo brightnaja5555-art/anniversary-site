@@ -13,7 +13,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /* ควบคุมการแสดงผลแต่ละหน้า */
@@ -158,8 +158,9 @@ body {
     background: rgba(255, 255, 255, 0.95);
     border: 3px solid #FFB6C1;
     border-radius: 20px;
-    padding: 18px 24px;
-    width: 320px;
+    padding: 16px 20px;
+    width: 280px;
+    max-width: 90vw;
     text-align: center;
     box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
     margin-bottom: 15px;
@@ -187,11 +188,10 @@ body {
 }
 
 #cat-text {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #5D4037;
-    line-height: 1.6;
+    line-height: 1.5;
     font-weight: 500;
-    min-height: 48px;
 }
 
 /* ปุ่มทั่วไป */
@@ -232,7 +232,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    gap: 50px;
     position: relative;
     width: 100%;
     max-width: 700px;
@@ -248,19 +248,19 @@ body {
 }
 
 .gift-wrapper.zoom-in {
-    transform: scale(1.15) translateY(-15px);
+    transform: scale(1.1) translateY(-10px);
 }
 
 /* กรอบข้อความบนกล่องของขวัญ */
 .box-speech-bubble {
     position: absolute;
-    bottom: 175px;
+    bottom: 160px;
     background: white;
     padding: 15px 20px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
     text-align: center;
-    width: 280px;
+    width: 260px;
     z-index: 10;
     border: 2px solid #ffb6c1;
     animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -284,7 +284,7 @@ body {
 }
 
 .box-speech-bubble p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #D81B60;
     font-weight: 600;
     margin-bottom: 10px;
@@ -296,7 +296,7 @@ body {
     100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ปุ่มในกล่องข้อความบนกล่อง (ซ่อนไว้สนิทตั้งแต่ตอนแรก) */
+/* ปุ่มในกล่องข้อความบนกล่อง */
 #gift-next-btn {
     opacity: 0;
     transform: translateY(10px);
@@ -321,7 +321,7 @@ body {
 }
 
 .gift-box img {
-    width: 150px;
+    width: 130px;
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
 }
@@ -348,6 +348,11 @@ body {
     z-index: 1;
 }
 
+.cat-guide-container img {
+    width: 130px;
+    height: auto;
+}
+
 #cat-speech-bubble {
     margin-bottom: 10px;
     background: white;
@@ -367,4 +372,26 @@ body {
 @keyframes floatBubble {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
+}
+
+/* ------------------- Responsive สำหรับมือถือ (Mobile Screen) ------------------- */
+@media screen and (max-width: 768px) {
+    .gift-scene-container {
+        flex-direction: column-reverse; /* สลับให้แมวอยู่ด้านบน กล่องอยู่ด้านล่าง หรือปรับตามความเหมาะสม */
+        gap: 30px;
+        padding: 10px;
+    }
+
+    .gift-box img {
+        width: 110px; /* ลดขนาดกล่องลงนิดนึงในมือถือ */
+    }
+
+    .cat-guide-container img {
+        width: 110px; /* ลดขนาดแมวลงในมือถือ */
+    }
+
+    .box-speech-bubble {
+        bottom: 140px;
+        width: 240px;
+    }
 }
