@@ -377,21 +377,34 @@ body {
 /* ------------------- Responsive สำหรับมือถือ (Mobile Screen) ------------------- */
 @media screen and (max-width: 768px) {
     .gift-scene-container {
-        flex-direction: column-reverse; /* สลับให้แมวอยู่ด้านบน กล่องอยู่ด้านล่าง หรือปรับตามความเหมาะสม */
-        gap: 30px;
-        padding: 10px;
+        flex-direction: column; /* เรียงเป็นแนวตั้งปกติ */
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    /* ให้กล่องของขวัญอยู่ด้านบน */
+    .gift-wrapper {
+        order: 1;
+    }
+
+    /*ให้น้องแมวลงมาอยู่ด้านล่างกล่องของขวัญ */
+    .cat-guide-container {
+        order: 2;
     }
 
     .gift-box img {
-        width: 110px; /* ลดขนาดกล่องลงนิดนึงในมือถือ */
+        width: 120px; 
     }
 
     .cat-guide-container img {
-        width: 110px; /* ลดขนาดแมวลงในมือถือ */
+        width: 100px; 
     }
 
+    /* ปรับตำแหน่งกล่องข้อความบนกล่องให้อยู่เหนือกล่องพอดี ไม่ออกไปชนแมวข้างล่าง */
     .box-speech-bubble {
-        bottom: 140px;
-        width: 240px;
+        bottom: 150px;
+        width: 260px;
     }
 }
