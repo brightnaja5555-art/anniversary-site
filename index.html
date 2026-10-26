@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Anniversary ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Font ภาษาไทย (Prompt) -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- เล่นเพลง MP3 เบื้องหลัง -->
+<audio id="bg-music" loop preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+    <!-- ================= Step 1: หน้าจอใส่รหัส PIN ================= -->
+    <div id="pin-screen" class="screen active">
+        <div class="card-box fade-in-up">
+            <div class="heart-icon">💖</div>
+            <h2>โปรดใส่รหัสผ่านลับก่อนเข้าชม</h2>
+            <p class="hint-text">💡 คำใบ้: วันเกิดคนสำคัญ (รูปแบบ DDMM เช่น 2504)</p>
+            
+            <div class="pin-input-group">
+                <input type="password" id="pin-input" maxlength="4" placeholder="••••">
+                <button id="pin-submit-btn" onclick="checkPin()">ยืนยัน</button>
+            </div>
+            <p id="error-msg" class="error-text"></p>
+        </div>
+    </div>
+
+    <!-- ================= Step 2: น้องแมวไกด์เดินเข้าฉาก ================= -->
+    <div id="main-content" class="screen hidden">
+        <div class="cat-wrapper">
+            <!-- กล่องข้อความคำพูดน้องแมว (ซ่อนไว้ก่อนตอนเดินเข้า) -->
+            <div id="speech-bubble" class="speech-bubble hidden">
+                <p id="cat-text"></p>
+                <button id="next-btn" class="next-btn" onclick="nextDialogue()">กดเพื่อไปต่อ ✨</button>
+            </div>
+            
+            <!-- รูปภาพน้องแมว (เรียกใช้ cat-walk1 เป็นตัวตั้งต้น) -->
+            <img id="cat-avatar" src="cat-walk1.png" alt="Cat Mascot" class="cat-img">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
