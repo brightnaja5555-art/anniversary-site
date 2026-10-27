@@ -512,3 +512,60 @@ body {
     user-select: none;
     mix-blend-mode: darken;
 }
+
+/* ================= Responsive สำหรับมือถือ (Mobile Screen) ================= */
+@media screen and (max-width: 768px) {
+    /* หน้าเปิดกล่องของขวัญ (Step 3) จัดเรียงแนวตั้ง กล่องบน แมวรอด้านล่าง */
+    #gift-screen {
+        align-items: center;
+        padding: 20px;
+    }
+
+    .gift-scene-container {
+        flex-direction: column !important; /* บังคับแนวตั้ง */
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .gift-wrapper {
+        order: 1; /* กล่องของขวัญอยู่ด้านบน */
+    }
+
+    .cat-guide-container {
+        order: 2; /* น้องแมวอยู่ด้านล่าง */
+    }
+
+    .gift-box img {
+        width: 120px; /* ปรับขนาดกล่องให้พอดีในมือถือ */
+    }
+
+    .cat-guide-container img {
+        width: 105px; /* ปรับขนาดน้องแมวให้พอดี */
+    }
+
+    /* กล่องข้อความซึ้งๆ ตอนเปิดกล่อง ให้อยู่เหนือกล่องพอดี ไม่บังแมว */
+    .box-speech-bubble {
+        bottom: 140px;
+        width: 260px;
+    }
+
+    /* หน้า Hub 6 ไอคอนในมือถือ */
+    .icons-grid {
+        max-width: 380px;
+        gap: 15px 25px;
+    }
+
+    .icon-circle {
+        width: 65px;
+        height: 65px;
+    }
+
+    .icon-circle img {
+        width: 35px;
+        height: 35px;
+    }
+}
