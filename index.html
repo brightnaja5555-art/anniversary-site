@@ -9,6 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- ================= Step 0: หน้าจอ Loading โหลดไฟล์ทั้งหมด ================= -->
+    <div id="loading-screen" class="screen active">
+        <div class="loading-box">
+            <div class="loading-cat-wrapper">
+                <img id="loading-cat-img" src="cat-walk1.png" alt="Loading Cat">
+            </div>
+            <h2>กำลังเตรียมข้อมูลรอแปปนึงนะะ... 💕</h2>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <p id="loading-percent-text" class="loading-text">0%</p>
+        </div>
+    </div>
 
     <!-- เล่นเพลง MP3 เบื้องหลังเริ่มต้น -->
     <audio id="bg-music" loop preload="auto">
@@ -31,7 +44,7 @@
 </audio>
 
     <!-- ================= Step 1: หน้าจอใส่รหัส PIN ================= -->
-    <div id="pin-screen" class="screen active">
+    <div id="pin-screen" class="screen hidden">
         <div class="card-box fade-in-up">
             <div class="heart-icon">💖</div>
             <h2>ใส่รหัสยืนยันตัวตนก่อนค้าบ</h2>
@@ -50,7 +63,7 @@
         <div class="cat-wrapper">
             <div id="speech-bubble" class="speech-bubble hidden">
                 <p id="cat-text"></p>
-                <button id="next-btn" class="next-btn" onclick="nextDialogue()">กดเพื่อไปต่อ ✨</button>
+                <button id="next-btn" class="next-btn" onclick="nextDialogue()">กดเพื่อไปต่อ</button>
             </div>
             <img id="cat-avatar" src="cat-walk1.png" alt="Cat Mascot" class="cat-img">
         </div>
@@ -61,8 +74,8 @@
         <div class="gift-scene-container">
             <div class="gift-wrapper">
                 <div id="box-speech-bubble" class="box-speech-bubble hidden">
-                    <p id="box-cat-text">🎉 Happy Anniversary นะครับ! ❤️</p>
-                    <button id="gift-next-btn" class="next-btn hidden" onclick="goToMusicScreen()">ไปดูความทรงจำกัน ✨</button>
+                    <p id="box-cat-text">🎉 Happy Anniversary นะครับ 🎉</p>
+                    <button id="gift-next-btn" class="next-btn hidden" onclick="goToMusicScreen()">ไปต่อกัน✨</button>
                 </div>
                 <div id="gift-box" class="gift-box" onclick="openGift()">
                     <img id="gift-img" src="gift-closed.png" alt="Gift Box">
@@ -82,8 +95,8 @@
         <div class="music-scene-container">
             <div class="music-content-box">
                 <div id="music-speech-bubble" class="speech-bubble pop-bounce">
-                    <p id="music-cat-text">ก่อนที่เราจะไปที่นั่นด้วยกัน... คุณไบร์ทเขาตั้งใจที่จะมอบเพลงนึงมาให้คุณ เธอจะฟังไหม? 🎶</p>
-                    <button id="play-special-btn" class="next-btn" onclick="startSpecialMusic()">ฟังสิ 💖</button>
+                    <p id="music-cat-text">ก่อนที่เราจะไปที่นั่นด้วยกัน... ไบร์ทอยากให้พี่ปันๆฟังเพลงนี้มากๆเลย พี่ปันๆจะฟังไหม? 🎶</p>
+                    <button id="play-special-btn" class="next-btn" onclick="startSpecialMusic()">ฟังสิ💖</button>
                 </div>
                 <img id="music-cat-img" src="cat-walk1.png" alt="Cat Mascot" class="music-cat-img pop-bounce">
             </div>
@@ -112,7 +125,7 @@
                     <div class="icon-circle">
                         <img src="photo-icon.png" alt="Photo Icon">
                     </div>
-                    <span>ภาพความทรงจำ</span>
+                    <span>แกลเลอรี</span>
                 </div>
 
                 <!-- 3. เวลาของเรา -->
@@ -128,7 +141,7 @@
                     <div class="icon-circle">
                         <img src="letter-icon.png" alt="Letter Icon">
                     </div>
-                    <span>ความในใจ</span>
+                    <span>ฝากบอก</span>
                 </div>
 
                 <!-- 5. กล่องสุ่มรางวัล -->
@@ -151,7 +164,7 @@
             <!-- น้องแมวอยู่ด้านล่างสุด -->
             <div class="hub-cat-area">
                 <div class="speech-bubble hub-bubble">
-                    <p>ลองไปสำรวจแต่ละที่สิ 🐾</p>
+                    <p>ลองไปสำรวจแต่ละที่ดูสิ 🐾</p>
                 </div>
                 <img id="hub-cat-img" src="cat-stand1.png" alt="Cat Guide" class="hub-cat-img">
             </div>
@@ -164,7 +177,7 @@
             <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
 
             <div class="game-header">
-                <h2>🎮 เกมทายใจคุณไบร์ท</h2>
+                <h2>🎮 เกมทายใจไบร์ท</h2>
                 <span id="question-progress">คำถามข้อที่ 1 / 10</span>
             </div>
 
@@ -248,7 +261,7 @@
 
             <div class="time-header">
                 <h2>⏰ เวลาของเราสองคน</h2>
-                <p>นับตั้งแต่ก้าวเดินร่วมทางกันมา...</p>
+                <p>นับตั้งแต่ตอนที่พวกเราได้คบกัน...</p>
             </div>
 
             <!-- กล่องแสดงตัวเลขเวลาเรียลไทม์ -->
@@ -277,7 +290,7 @@
             <!-- น้องแมวประกบคู่พร้อมข้อความ -->
             <div class="time-cat-area">
                 <div class="speech-bubble time-bubble">
-                    <p>ละเอียดยันวินาทีเลยเป็นไง 🐾✨</p>
+                    <p>ละเอียดยันวินาทีเลยเป็นไงเท่มั้ย 🐾✨</p>
                 </div>
                 <img id="time-cat-img" src="cat-stand1.png" alt="Cat Guide" class="time-cat-img">
             </div>
@@ -314,7 +327,7 @@
             <!-- น้องแมวยืนกระดิกหางอยู่ด้านล่าง -->
             <div class="photos-cat-area">
                 <div class="speech-bubble photos-bubble">
-                    <p>ความทรงจำเต็มไปหมดเลย น่ารักจัง 🐾✨</p>
+                    <p>เสียดายมีภาพคู่แค่ภาพเดียวเองไว้ถ่ายด้วยกันนะ🐾✨</p>
                 </div>
                 <img id="photos-cat-img" src="cat-stand1.png" alt="Cat Guide" class="photos-cat-img">
             </div>

@@ -1442,26 +1442,42 @@ body {
     mix-blend-mode: darken;
 }
 
-/* Responsive สำหรับมือถือ */
+/* แก้ไขตำแหน่งฉากเปิดกล่องของขวัญสำหรับมือถือ */
 @media screen and (max-width: 768px) {
-    .letter-container {
-        width: 92%;
-        height: 85vh;
-        padding: 15px;
+    .gift-scene-container {
+        flex-direction: column !important; /* บังคับจัดเรียงเป็นแนวตั้ง บน-ล่าง */
+        justify-content: flex-end; /* ดึงองค์ประกอบทั้งหมดลงมาด้านล่างของหน้าจอ */
+        align-items: center;
+        gap: 15px; /* ระยะห่างระหว่างกล่องกับน้องแมว */
+        padding-bottom: 30px; /* เว้นระยะห่างจากขอบล่างของหน้าจอ */
+        height: 100vh;
     }
 
-    #feedback-input {
-        min-height: 150px;
-        font-size: 0.88rem;
+    .gift-wrapper {
+        margin-top: 60px; /* ดึงกล่องลงมาเพื่อเว้นพื้นที่ให้กล่องคำพูดแสดงด้านบนได้พอดี */
     }
 
-    .letter-bubble {
-        width: 170px;
-        font-size: 0.7rem;
+    .gift-box img {
+        width: 120px; /* ปรับขนาดกล่องของขวัญให้สมดุลบนมือถือ */
     }
 
-    .letter-cat-img {
-        width: 55px;
+    .box-speech-bubble {
+        bottom: 135px; /* ตำแหน่งกล่องคำพูดเหนือกล่องของขวัญ */
+        width: 250px;
+        font-size: 0.85rem;
+    }
+
+    .cat-guide-container {
+        margin-top: 10px;
+    }
+
+    .cat-guide-container img {
+        width: 100px; /* ปรับขนาดน้องแมวด้านล่าง */
+    }
+
+    #cat-speech-bubble {
+        font-size: 0.8rem;
+        padding: 8px 12px;
     }
 }
 
@@ -1626,4 +1642,75 @@ body {
 /* บังคับให้คลาส hidden ซ่อนตัวอย่างเด็ดขาด */
 .hidden {
     display: none !important;
+}
+
+/* ================= Step 0: Loading Screen ================= */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 100%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 85%;
+    max-width: 360px;
+}
+
+.loading-cat-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-cat-wrapper img {
+    width: 90px;
+    height: auto;
+    mix-blend-mode: darken;
+}
+
+.loading-box h2 {
+    font-size: 1.05rem;
+    color: #D81B60;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 14px;
+    background: #FFF;
+    border: 2px solid #FFB6C1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #FFB6C1, #FF1493);
+    border-radius: 8px;
+    transition: width 0.2s ease-out;
+}
+
+.loading-text {
+    font-size: 0.85rem;
+    color: #8D6E63;
+    font-weight: 600;
+    margin-top: 10px;
 }

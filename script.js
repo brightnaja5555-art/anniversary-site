@@ -1,3 +1,90 @@
+// รายการไฟล์ทั้งหมดที่ต้องการให้โหลดล่วงหน้า 100% ก่อนเปิดหน้าเว็บ
+const assetsToPreload = [
+    // รูปแอนิเมชันน้องแมว
+    'cat-walk1.png', 'cat-walk2.png', 'cat-walk3.png', 'cat-walk4.png',
+    'cat-stand1.png', 'cat-stand2.png',
+    // รูปไอคอน & ของขวัญ
+    'gift-closed.png', 'gift-opened.png',
+    'game-icon.png', 'photo-icon.png', 'time-icon.png', 'letter-icon.png', 'gacha-icon.png', 'troll-icon.png',
+    // รูปภาพแกลเลอรีความทรงจำทั้ง 8 รูป
+    'photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg',
+    'photo5.jpg', 'photo6.jpg', 'photo7.jpg', 'photo8.jpg',
+    // ไฟล์เสียง
+    'click-sfx.mp3', 'gift-sfx.mp3', 'song.mp3', 'special-song.mp3'
+];
+
+let loadedAssetsCount = 0;
+
+// แอนิเมชันน้องแมวเดินขณะรอโหลด
+function startLoadingCatAnim() {
+    const loadingCatImg = document.getElementById("loading-cat-img");
+    let frameIdx = 0;
+    return setInterval(() => {
+        frameIdx = (frameIdx + 1) % catWalkFrames.length;
+        if (loadingCatImg) loadingCatImg.src = catWalkFrames[frameIdx];
+    }, 180);
+}
+
+// ฟังก์ชันเริ่มพรีโหลดไฟล์ทั้งหมด
+function initPreloader() {
+    const animTimer = startLoadingCatAnim();
+    const progressBar = document.getElementById("progress-bar");
+    const percentText = document.getElementById("loading-percent-text");
+    const totalAssets = assetsToPreload.length;
+
+    function updateProgress() {
+        loadedAssetsCount++;
+        const percent = Math.floor((loadedAssetsCount / totalAssets) * 100);
+        
+        if (progressBar) progressBar.style.width = `${percent}%`;
+        if (percentText) percentText.textContent = `${percent}%`;
+
+        if (loadedAssetsCount >= totalAssets) {
+            setTimeout(() => {
+                clearInterval(animTimer);
+                finishLoading();
+            }, 500);
+        }
+    }
+
+    assetsToPreload.forEach(assetUrl => {
+        if (assetUrl.endsWith('.mp3')) {
+            const audio = new Audio();
+            audio.src = assetUrl;
+            audio.oncanplaythrough = updateProgress;
+            audio.onerror = updateProgress; // ข้ามกรณีไฟล์เสียงหาไม่เจอ
+        } else {
+            const img = new Image();
+            img.src = assetUrl;
+            img.onload = updateProgress;
+            img.onerror = updateProgress; // ข้ามกรณีรูปหาไม่เจอ
+        }
+    });
+}
+
+// เมื่อโหลดครบ 100% สลับไปหน้าใส่ PIN
+function finishLoading() {
+    const loadingScreen = document.getElementById("loading-screen");
+    const pinScreen = document.getElementById("pin-screen");
+
+    if (loadingScreen) {
+        loadingScreen.style.transition = "opacity 0.6s ease";
+        loadingScreen.style.opacity = "0";
+        setTimeout(() => {
+            loadingScreen.classList.remove("active");
+            loadingScreen.classList.add("hidden");
+            
+            if (pinScreen) {
+                pinScreen.classList.remove("hidden");
+                pinScreen.classList.add("active");
+            }
+        }, 600);
+    }
+}
+
+// เรียกทำงานพรีโหลดทันทีที่เปิดหน้าเว็บ
+window.addEventListener("DOMContentLoaded", initPreloader);
+
 const CORRECT_PIN = "2109";
 
 const catWalkFrames = ['cat-walk1.png', 'cat-walk2.png', 'cat-walk3.png', 'cat-walk4.png'];
@@ -78,7 +165,7 @@ function checkPin() {
         startCatEntrance();
         
     } else {
-        errorMsg.textContent = "❌ รหัสผ่านไม่ถูกต้อง ลองนึกดูดีๆ นะคะคนเก่ง";
+        errorMsg.textContent = "❌ รหัสผ่านไม่ถูกต้อง ลองนึกดูดีๆหนา";
         document.getElementById("pin-input").value = "";
         
         const card = document.querySelector(".card-box");
@@ -196,11 +283,11 @@ function openGift() {
         nextBtn.classList.remove("show");
     }
 
-    if (boxText) boxText.textContent = "🎉 Happy Anniversary นะครับ! ❤️";
+    if (boxText) boxText.textContent = "🎉Happy Anniversary นะคับ🎉";
     
     setTimeout(() => {
         if (boxText) {
-            boxText.textContent = "ขอบคุณที่คอยอยู่ข้างๆ และสร้างรอยยิ้มให้กันมาตลอดนะ ดีใจมากๆ เลยที่มีเธออยู่ในทุกๆ วัน ✨";
+            boxText.textContent = "ครบรอบ 1 เดือนแล้วว ขอบคุณพี่ปันๆที่คอยอยู่ข้างไบร์ทตลอด ไบร์ทมีความสุขมากกๆ ต่อจากนี้ไม่ว่าจะเกิดอะไรขึ้นขอให้พวกเรายังเดินไปด้วยกันต่อไปนะ รักแฟนค้าบ  ✨";
         }
         
         setTimeout(() => {
@@ -426,7 +513,7 @@ function finishGame() {
     
     if (score === 10) {
         userTickets += 1; // เพิ่มคูปองสุ่ม 1 ใบ
-        alert(`🎉 สุดยอดมากกก! ตอบถูกหมดทุกข้อเลย (${score}/10)\nคุณได้รับ 🎟️ คูปองสุ่ม 1 ใบ! นำไปหมุนวงล้อกาชาได้เลยน้า 🎁`);
+        alert(`🎉 สุดยอดมากกก! ตอบถูกหมดทุกข้อเลย (${score}/10)\nคุณได้รับ 🎟️ คูปองสุ่ม 1 ใบ! นำไปหมุนวงล้อกาชาได้เลยย 🎁`);
     } else {
         alert(`✨ จบเกมแล้ว! เธอตอบถูก ${score} / 10 ข้อ\n(ต้องตอบถูกหมด 10/10 ข้อถึงจะได้รับคูปองนะ ลองเล่นใหม่อีกครั้งได้เลย!) 💕`);
     }
@@ -799,23 +886,32 @@ function startTrollCatAnimation() {
     }, 400);
 }
 
-// ฟังก์ชันเล่นเสียงคลิกปุ่มทั่วไป
+// ================= ระบบเล่นเสียงแก้ปัญหา Delay บน Netlify =================
+
+// ฟังก์ชันเล่นเสียงคลิกปุ่มทั่วไป (แก้ไขไร้ดีเลย์)
 function playClickSound() {
-    const sfx = document.getElementById("click-sfx");
-    if (sfx) {
-        sfx.currentTime = 0;
-        sfx.volume = 0.4;
-        sfx.play().catch(err => console.log("Click SFX error:", err));
+    const originalSfx = document.getElementById("click-sfx");
+    if (originalSfx) {
+        // คัดลอก Node เสียงเพื่อเล่นใน Memory ทันที ไม่ต้องรอดึงจาก Server
+        const sfxClone = originalSfx.cloneNode(true);
+        sfxClone.volume = 0.5;
+        const promise = sfxClone.play();
+        if (promise !== undefined) {
+            promise.catch(err => console.log("Click SFX delay fix:", err));
+        }
     }
 }
 
-// ฟังก์ชันเล่นเสียงเปิดกล่องของขวัญโดยเฉพาะ
+// ฟังก์ชันเล่นเสียงเปิดกล่องของขวัญโดยเฉพาะ (แก้ไขไร้ดีเลย์)
 function playGiftSound() {
-    const giftSfx = document.getElementById("gift-sfx");
-    if (giftSfx) {
-        giftSfx.currentTime = 0;
-        giftSfx.volume = 0.6;
-        giftSfx.play().catch(err => console.log("Gift SFX error:", err));
+    const originalGiftSfx = document.getElementById("gift-sfx");
+    if (originalGiftSfx) {
+        const giftClone = originalGiftSfx.cloneNode(true);
+        giftClone.volume = 0.7;
+        const promise = giftClone.play();
+        if (promise !== undefined) {
+            promise.catch(err => console.log("Gift SFX delay fix:", err));
+        }
     }
 }
 
