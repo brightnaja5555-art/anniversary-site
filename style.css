@@ -1,4 +1,4 @@
-/* ================= CSS ฉบับสมบูรณ์ ================= */
+/* ================= CSS ฉบับสมบูรณ์ (รวม Gacha & Inventory) ================= */
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +16,6 @@ body {
     overflow: hidden;
 }
 
-/* ควบคุมการแสดงผลแต่ละหน้าให้เต็มจอและอยู่ตรงกลางเสมอ */
 .screen {
     position: absolute;
     top: 0;
@@ -401,7 +400,7 @@ body {
     animation: popBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* ================= Step 5: Hub Screen (6 ไอคอน & จัดระเบียบไม่ให้แมวบัง) ================= */
+/* ------------------- Step 5: Hub Screen ------------------- */
 #hub-screen {
     position: relative;
     width: 100vw;
@@ -413,17 +412,31 @@ body {
     overflow: hidden;
 }
 
+.ticket-badge-hub {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: #FFF;
+    border: 2px solid #FF69B4;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #D81B60;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.25);
+    z-index: 10;
+}
+
 .hub-container {
     position: relative;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* จัดวาง 6 ไอคอนเป็นแบบ 2-2-2 (2 คอลัมน์ 3 แถว) */
 .icons-grid {
     position: absolute;
     top: 50%;
@@ -432,9 +445,9 @@ body {
     width: 100%;
     max-width: 500px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 คอลัมน์ */
-    grid-template-rows: repeat(3, auto);     /* 3 แถว */
-    gap: 20px 40px; /* ระยะห่างระหว่างไอคอน แนวนอนและแนวตั้ง */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 20px 40px;
     padding: 10px;
     justify-items: center;
     align-items: center;
@@ -484,7 +497,6 @@ body {
     white-space: nowrap;
 }
 
-/* ดึงน้องแมวลงมาชิดขอบล่างสุด ไม่ให้บังไอคอนแถวล่างสุด */
 .hub-cat-area {
     position: absolute;
     bottom: 10px;
@@ -513,59 +525,1105 @@ body {
     mix-blend-mode: darken;
 }
 
-/* ================= Responsive สำหรับมือถือ (Mobile Screen) ================= */
+/* ------------------- Step 6: Game Screen ------------------- */
+#game-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+@keyframes fadeInBright {
+    0% { opacity: 0; filter: brightness(0.2); }
+    100% { opacity: 1; filter: brightness(1); }
+}
+
+.game-fade-in {
+    animation: fadeInBright 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.game-container {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    height: 90vh;
+    max-height: 600px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 20px;
+    box-sizing: border-box;
+}
+
+.back-hub-btn {
+    align-self: flex-start;
+    background: #FFF0F5;
+    border: 2px solid #FFB6C1;
+    color: #D81B60;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.back-hub-btn:hover {
+    background: #FF69B4;
+    color: white;
+    transform: scale(1.05);
+}
+
+.game-header {
+    text-align: center;
+    width: 100%;
+}
+
+.game-header h2 {
+    font-size: 1.3rem;
+    color: #D81B60;
+    margin-bottom: 4px;
+}
+
+#question-progress {
+    font-size: 0.85rem;
+    color: #8D6E63;
+    font-weight: 500;
+}
+
+.question-box {
+    background: #FFF0F5;
+    border: 2px solid #FFB6C1;
+    border-radius: 16px;
+    padding: 15px 20px;
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#question-text {
+    font-size: 1rem;
+    color: #5D4037;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.option-btn {
+    background: white;
+    border: 2px solid #FFB6C1;
+    color: #5D4037;
+    padding: 12px 15px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.option-btn:hover:not(:disabled) {
+    background: #FFF0F5;
+    border-color: #FF69B4;
+    transform: translateY(-2px);
+}
+
+.option-btn.correct {
+    background-color: #4CAF50 !important;
+    border-color: #388E3C !important;
+    color: white !important;
+    transform: scale(1.02);
+}
+
+.option-btn.wrong {
+    background-color: #E57373 !important;
+    border-color: #D32F2F !important;
+    color: white !important;
+}
+
+.game-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.game-bubble {
+    width: 200px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.game-bubble::after {
+    display: none !important;
+}
+
+.game-cat-img {
+    width: 70px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* ------------------- Step 7: Gacha Screen ------------------- */
+#gacha-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.gacha-container {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    height: 92vh;
+    max-height: 640px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.gacha-header-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inventory-btn {
+    background: #FF69B4;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+    transition: transform 0.2s;
+}
+
+.inventory-btn:hover {
+    transform: scale(1.05);
+}
+
+.gacha-title-area {
+    text-align: center;
+}
+
+.gacha-title-area h2 {
+    font-size: 1.3rem;
+    color: #D81B60;
+}
+
+.gacha-ticket-status {
+    font-size: 0.85rem;
+    color: #8D6E63;
+    margin-top: 2px;
+}
+
+/* ดีไซน์วงล้อสุ่มกาชา 6 ช่อง */
+.wheel-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -14px;
+    font-size: 1.6rem;
+    z-index: 10;
+    color: #FF1493;
+}
+
+.gacha-wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid #FF69B4;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+    background: conic-gradient(
+        #FFE4E1 0deg 60deg,
+        #FFF0F5 60deg 120deg,
+        #FFE4E1 120deg 180deg,
+        #FFF0F5 180deg 240deg,
+        #FFE4E1 240deg 300deg,
+        #FFF0F5 300deg 360deg
+    );
+}
+
+.wheel-section {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    right: 0;
+    transform-origin: 0% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wheel-section span {
+    position: absolute;
+    left: 10px;
+    bottom: 25px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #5D4037;
+    white-space: nowrap;
+}
+
+.sec-1 { transform: rotate(0deg) skewY(-30deg); }
+.sec-2 { transform: rotate(60deg) skewY(-30deg); }
+.sec-3 { transform: rotate(120deg) skewY(-30deg); }
+.sec-4 { transform: rotate(180deg) skewY(-30deg); }
+.sec-5 { transform: rotate(240deg) skewY(-30deg); }
+.sec-6 { transform: rotate(300deg) skewY(-30deg); }
+
+.wheel-section span {
+    transform: skewY(30deg) rotate(30deg);
+}
+
+.spin-btn {
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 20, 147, 0.35);
+    transition: transform 0.2s;
+}
+
+.spin-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.spin-btn:disabled {
+    background: #CCC;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.gacha-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.gacha-bubble {
+    width: 210px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.gacha-bubble::after {
+    display: none !important;
+}
+
+.gacha-cat-img {
+    width: 65px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* Modal กระเป๋าเก็บคูปอง (Inventory Modal) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+.modal-card {
+    background: white;
+    width: 88%;
+    max-width: 400px;
+    max-height: 80vh;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #FFE4E1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-header h3 {
+    color: #D81B60;
+    font-size: 1.1rem;
+}
+
+.close-modal-btn {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #8D6E63;
+}
+
+.modal-body {
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.inventory-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-inv-text {
+    text-align: center;
+    color: #8D6E63;
+    font-size: 0.9rem;
+    padding: 20px 0;
+}
+
+.ticket-item {
+    background: #FFF0F5;
+    border: 2px dashed #FF69B4;
+    border-radius: 12px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-item-title {
+    font-weight: 600;
+    color: #5D4037;
+    font-size: 0.9rem;
+}
+
+.ticket-item-count {
+    background: #FF1493;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Responsive สำหรับมือถือ */
 @media screen and (max-width: 768px) {
-    /* หน้าเปิดกล่องของขวัญ (Step 3) จัดเรียงแนวตั้ง กล่องบน แมวรอด้านล่าง */
-    #gift-screen {
-        align-items: center;
-        padding: 20px;
+    .gacha-container {
+        width: 92%;
+        height: 90vh;
+        padding: 15px;
     }
 
-    .gift-scene-container {
-        flex-direction: column !important; /* บังคับแนวตั้ง */
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        width: 100%;
-        max-width: 100%;
-        margin: 0 auto;
+    .wheel-wrapper {
+        width: 190px;
+        height: 190px;
     }
 
-    .gift-wrapper {
-        order: 1; /* กล่องของขวัญอยู่ด้านบน */
+    .wheel-section span {
+        font-size: 0.68rem;
+        left: 5px;
+        bottom: 20px;
     }
 
-    .cat-guide-container {
-        order: 2; /* น้องแมวอยู่ด้านล่าง */
+    .gacha-bubble {
+        width: 175px;
+        font-size: 0.72rem;
     }
 
-    .gift-box img {
-        width: 120px; /* ปรับขนาดกล่องให้พอดีในมือถือ */
+    .gacha-cat-img {
+        width: 55px;
+    }
+}
+
+/* ================= Step 8: Time Screen (หน้าจอเวลาของเรา) ================= */
+#time-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.time-container {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    height: 88vh;
+    max-height: 560px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.time-header {
+    text-align: center;
+}
+
+.time-header h2 {
+    font-size: 1.3rem;
+    color: #D81B60;
+    margin-bottom: 2px;
+}
+
+.time-header p {
+    font-size: 0.85rem;
+    color: #8D6E63;
+}
+
+/* กล่องตัวเลขเวลาเรียลไทม์ */
+.time-display-box {
+    background: #FFF0F5;
+    border: 2px solid #FFB6C1;
+    border-radius: 20px;
+    padding: 20px 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    box-shadow: inset 0 4px 10px rgba(255, 182, 193, 0.2);
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 65px;
+}
+
+.time-unit span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #D81B60;
+    line-height: 1.2;
+}
+
+.time-unit label {
+    font-size: 0.8rem;
+    color: #8D6E63;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.time-separator {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFB6C1;
+    margin-bottom: 18px;
+}
+
+/* น้องแมวในหน้าเวลา */
+.time-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.time-bubble {
+    width: 210px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.time-bubble::after {
+    display: none !important;
+}
+
+.time-cat-img {
+    width: 65px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* Responsive มือถือ */
+@media screen and (max-width: 768px) {
+    .time-container {
+        width: 92%;
+        height: 85vh;
+        padding: 15px;
     }
 
-    .cat-guide-container img {
-        width: 105px; /* ปรับขนาดน้องแมวให้พอดี */
+    .time-unit span {
+        font-size: 1.4rem;
     }
 
-    /* กล่องข้อความซึ้งๆ ตอนเปิดกล่อง ให้อยู่เหนือกล่องพอดี ไม่บังแมว */
-    .box-speech-bubble {
-        bottom: 140px;
-        width: 260px;
+    .time-separator {
+        font-size: 1.2rem;
     }
 
-    /* หน้า Hub 6 ไอคอนในมือถือ */
-    .icons-grid {
-        max-width: 380px;
-        gap: 15px 25px;
+    .time-bubble {
+        width: 175px;
+        font-size: 0.72rem;
     }
 
-    .icon-circle {
-        width: 65px;
-        height: 65px;
+    .time-cat-img {
+        width: 55px;
+    }
+}
+
+/* ================= Step 9: Photos Screen (หน้าจอภาพความทรงจำ) ================= */
+#photos-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.photos-container {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    height: 92vh;
+    max-height: 640px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 15px;
+    box-sizing: border-box;
+}
+
+.photos-header {
+    text-align: center;
+    width: 100%;
+}
+
+.photos-header h2 {
+    font-size: 1.2rem;
+    color: #D81B60;
+    margin-bottom: 2px;
+}
+
+#photo-counter {
+    font-size: 0.8rem;
+    color: #8D6E63;
+    font-weight: 500;
+}
+
+/* กรอบรูปและความทรงจำ */
+.photo-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.photo-title-bubble {
+    background: white;
+    border: 2px solid #FFB6C1;
+    padding: 6px 15px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.25);
+    text-align: center;
+    max-width: 90%;
+}
+
+.photo-title-bubble p {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #D81B60;
+}
+
+.photo-frame {
+    width: 100%;
+    height: 280px; /* ล็อกความสูงกรอบรูปให้พอดีจอ ไม่ล้น */
+    background: #FFF0F5;
+    border: 2px solid #FFB6C1;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ปรับรูปให้อยู่ในกรอบสวยงาม ไม่เบี้ยว */
+    transition: transform 0.3s ease;
+}
+
+/* ปุ่มเลื่อนซ้ายขวา */
+.photo-nav-buttons {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.nav-arrow-btn {
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3);
+    transition: transform 0.2s;
+}
+
+.nav-arrow-btn:hover {
+    transform: scale(1.05);
+}
+
+/* น้องแมวในหน้าภาพความทรงจำ */
+.photos-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.photos-bubble {
+    width: 190px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.photos-bubble::after {
+    display: none !important;
+}
+
+.photos-cat-img {
+    width: 58px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* Responsive สำหรับมือถือ */
+@media screen and (max-width: 768px) {
+    .photos-container {
+        width: 92%;
+        height: 88vh;
+        padding: 12px;
     }
 
-    .icon-circle img {
-        width: 35px;
-        height: 35px;
+    .photo-frame {
+        height: 240px;
     }
+
+    .photos-bubble {
+        width: 160px;
+        font-size: 0.7rem;
+    }
+
+    .photos-cat-img {
+        width: 50px;
+    }
+}
+
+/* ================= Step 10: Letter Screen (หน้าจอความในใจ) ================= --> */
+#letter-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.letter-container {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    height: 90vh;
+    max-height: 600px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 15px;
+    box-sizing: border-box;
+}
+
+.letter-header {
+    text-align: center;
+    width: 100%;
+}
+
+.letter-header h2 {
+    font-size: 1.25rem;
+    color: #D81B60;
+    margin-bottom: 2px;
+}
+
+.letter-header p {
+    font-size: 0.8rem;
+    color: #8D6E63;
+}
+
+/* พื้นที่กล่องข้อความจดหมาย */
+.letter-box-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+    margin: 12px 0;
+}
+
+#feedback-input {
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    background: #FFF0F5;
+    border: 2px solid #FFB6C1;
+    border-radius: 16px;
+    padding: 15px;
+    font-size: 0.95rem;
+    color: #5D4037;
+    font-family: 'Prompt', sans-serif;
+    outline: none;
+    resize: none;
+    box-shadow: inset 0 4px 10px rgba(255, 182, 193, 0.15);
+}
+
+#feedback-input:focus {
+    border-color: #FF69B4;
+    background: #FFF;
+}
+
+.save-status-msg {
+    font-size: 0.75rem;
+    color: #4CAF50;
+    text-align: right;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    min-height: 15px;
+}
+
+.save-status-msg.show {
+    opacity: 1;
+}
+
+/* น้องแมวในหน้าความในใจ */
+.letter-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.letter-bubble {
+    width: 210px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.letter-bubble::after {
+    display: none !important;
+}
+
+.letter-cat-img {
+    width: 65px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* Responsive สำหรับมือถือ */
+@media screen and (max-width: 768px) {
+    .letter-container {
+        width: 92%;
+        height: 85vh;
+        padding: 15px;
+    }
+
+    #feedback-input {
+        min-height: 150px;
+        font-size: 0.88rem;
+    }
+
+    .letter-bubble {
+        width: 170px;
+        font-size: 0.7rem;
+    }
+
+    .letter-cat-img {
+        width: 55px;
+    }
+}
+
+/* ================= Step 11: Troll Screen (หน้าจอไม่ดูถือว่าพลาด) ================= */
+#troll-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.troll-container {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    height: 90vh;
+    max-height: 600px;
+    background: #FFFAFA;
+    border-radius: 24px;
+    border: 2px solid #FFC0CB;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 15px;
+    box-sizing: border-box;
+}
+
+.troll-header {
+    text-align: center;
+    width: 100%;
+}
+
+.troll-header h2 {
+    font-size: 1.25rem;
+    color: #D81B60;
+    margin-bottom: 2px;
+}
+
+.troll-header p {
+    font-size: 0.8rem;
+    color: #8D6E63;
+}
+
+.troll-box-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.click-counter-badge {
+    background: #FFF;
+    border: 2px solid #FFB6C1;
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #5D4037;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.click-counter-badge span {
+    color: #D81B60;
+    font-size: 1.1rem;
+}
+
+.troll-btn {
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 20, 147, 0.35);
+    transition: transform 0.1s ease, background 0.2s;
+    user-select: none;
+}
+
+.troll-btn:active {
+    transform: scale(0.92);
+}
+
+.troll-result-box {
+    background: #FFF0F5;
+    border: 2px dashed #FF1493;
+    padding: 15px 20px;
+    border-radius: 18px;
+    text-align: center;
+    animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.troll-result-box p {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #D81B60;
+}
+
+.troll-cat-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.troll-bubble {
+    width: 210px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #D81B60;
+    margin-bottom: 0 !important;
+}
+
+.troll-bubble::after {
+    display: none !important;
+}
+
+.troll-cat-img {
+    width: 65px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
+}
+
+/* Responsive มือถือ */
+@media screen and (max-width: 768px) {
+    .troll-container {
+        width: 92%;
+        height: 85vh;
+        padding: 15px;
+    }
+
+    .troll-btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    .troll-bubble {
+        width: 170px;
+        font-size: 0.7rem;
+    }
+
+    .troll-cat-img {
+        width: 55px;
+    }
+}
+
+/* บังคับให้คลาส hidden ซ่อนตัวอย่างเด็ดขาด */
+.hidden {
+    display: none !important;
 }

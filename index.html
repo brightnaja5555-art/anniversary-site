@@ -20,12 +20,22 @@
         <source src="special-song.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- เสียงเอฟเฟกต์คลิกปุ่มทั่วไป -->
+<audio id="click-sfx" preload="auto">
+    <source src="click-sfx.mp3" type="audio/mpeg">
+</audio>
+
+<!-- เสียงเอฟเฟกต์พิเศษสำหรับเปิดกล่องของขวัญ -->
+<audio id="gift-sfx" preload="auto">
+    <source src="gift-sfx.mp3" type="audio/mpeg">
+</audio>
+
     <!-- ================= Step 1: หน้าจอใส่รหัส PIN ================= -->
     <div id="pin-screen" class="screen active">
         <div class="card-box fade-in-up">
             <div class="heart-icon">💖</div>
-            <h2>โปรดใส่รหัสผ่านลับก่อนเข้าชม</h2>
-            <p class="hint-text">💡 คำใบ้: วันเกิดคนสำคัญ (รูปแบบ DDMM เช่น 2504)</p>
+            <h2>ใส่รหัสยืนยันตัวตนก่อนค้าบ</h2>
+            <p class="hint-text">💡 คำใบ้: วันเกิดไบร์ท (รูปแบบ DDMM เช่น 2504)</p>
             
             <div class="pin-input-group">
                 <input type="password" id="pin-input" maxlength="4" placeholder="••••">
@@ -82,8 +92,12 @@
 
     <!-- ================= Step 5: หน้าจอหลัก 6 ไอคอน & น้องแมวไกด์ ================= -->
     <div id="hub-screen" class="screen hidden">
+        <!-- ตัวแสดงคูปองสะสมที่มุมขวาบน -->
+        <div class="ticket-badge-hub">
+            🎟️ คูปองสุ่ม: <span id="hub-ticket-count">0</span> ใบ
+        </div>
+
         <div class="hub-container">
-            <!-- 6 ไอคอนหลัก -->
             <div class="icons-grid">
                 <!-- 1. เกมทายใจ -->
                 <div class="icon-item" onclick="openGameModal()">
@@ -109,7 +123,7 @@
                     <span>เวลาของเรา</span>
                 </div>
 
-                <!-- 4. ความในใจ (สิ่งที่อยากปรับปรุง) -->
+                <!-- 4. ความในใจ -->
                 <div class="icon-item" onclick="openLetterModal()">
                     <div class="icon-circle">
                         <img src="letter-icon.png" alt="Letter Icon">
@@ -117,24 +131,24 @@
                     <span>ความในใจ</span>
                 </div>
 
-                <!-- 5. กล่องสุ่มรางวัล (ปลดล็อกเมื่อตอบถูกหมด) -->
+                <!-- 5. กล่องสุ่มรางวัล -->
                 <div class="icon-item" onclick="openGachaModal()">
                     <div class="icon-circle">
                         <img src="gacha-icon.png" alt="Gacha Icon">
                     </div>
-                    <span>กล่องสุ่ม 🎁</span>
+                    <span>กล่องสุ่ม</span>
                 </div>
 
-                <!-- 6. ปุ่มหลอก: ไม่กดถือว่าพลาด -->
+                <!-- 6. ปุ่มหลอก -->
                 <div class="icon-item" onclick="openTrollModal()">
                     <div class="icon-circle">
                         <img src="troll-icon.png" alt="Troll Icon">
                     </div>
-                    <span>ห้ามกดเด็ดขาด!</span>
+                    <span>ไม่ดูถือว่าพลาด</span>
                 </div>
             </div>
 
-            <!-- น้องแมวอยู่ด้านล่างสุด ไม่ให้บังไอคอน -->
+            <!-- น้องแมวอยู่ด้านล่างสุด -->
             <div class="hub-cat-area">
                 <div class="speech-bubble hub-bubble">
                     <p>ลองไปสำรวจแต่ละที่สิ 🐾</p>
@@ -143,6 +157,231 @@
             </div>
         </div>
     </div>
+
+    <!-- ================= Step 6: หน้าจอเกมทายใจ (Quiz Game) ================= -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-container">
+            <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+
+            <div class="game-header">
+                <h2>🎮 เกมทายใจคุณไบร์ท</h2>
+                <span id="question-progress">คำถามข้อที่ 1 / 10</span>
+            </div>
+
+            <div class="question-box">
+                <p id="question-text">กำลังโหลดคำถาม...</p>
+            </div>
+
+            <div class="options-grid">
+                <button class="option-btn" onclick="selectOption(0)" id="opt-0"></button>
+                <button class="option-btn" onclick="selectOption(1)" id="opt-1"></button>
+                <button class="option-btn" onclick="selectOption(2)" id="opt-2"></button>
+                <button class="option-btn" onclick="selectOption(3)" id="opt-3"></button>
+            </div>
+
+            <div class="game-cat-area">
+                <div class="speech-bubble game-bubble">
+                    <p>ถ้าถูกหมดได้คูปองสำหรับกล่องสุ่มนะ! 🎁✨</p>
+                </div>
+                <img id="game-cat-img" src="cat-stand1.png" alt="Cat Guide" class="game-cat-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 7: หน้าจอกล่องสุ่มรางวัล (Gacha Wheel) ================= -->
+    <div id="gacha-screen" class="screen hidden">
+        <div class="gacha-container">
+            <div class="gacha-header-nav">
+                <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+                <button class="inventory-btn" onclick="openInventoryModal()">🎒 กระเป๋าบัตร (<span id="inv-count">0</span>)</button>
+            </div>
+
+            <div class="gacha-title-area">
+                <h2>🎰 กล่องสุ่มกาชาพิเศษ</h2>
+                <p class="gacha-ticket-status">🎟️ คุณมีคูปองสุ่ม: <strong id="gacha-ticket-count">0</strong> ใบ</p>
+            </div>
+
+            <!-- วงล้อสุ่มสไตล์แผ่นดิสก์ 6 ช่อง -->
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer">🔻</div>
+                <div id="gacha-wheel" class="gacha-wheel">
+                    <div class="wheel-section sec-1"><span>🥤 น้ำ</span></div>
+                    <div class="wheel-section sec-2"><span>🍲 ข้าว</span></div>
+                    <div class="wheel-section sec-3"><span>👑 คำสั่ง</span></div>
+                    <div class="wheel-section sec-4"><span>💖 ตามใจ</span></div>
+                    <div class="wheel-section sec-5"><span>😇 ห้ามดื้อ</span></div>
+                    <div class="wheel-section sec-6"><span>😳 ห้ามเหม่อ</span></div>
+                </div>
+            </div>
+
+            <button id="spin-btn" class="spin-btn" onclick="spinWheel()">🎲 กดสุ่มรางวัล (ใช้ 1 คูปอง)</button>
+
+            <!-- น้องแมวคอยเชียร์ลอยอยู่ด้านล่างสบัดหาง -->
+            <div class="gacha-cat-area">
+                <div class="speech-bubble gacha-bubble">
+                    <p>บัตรนี้เอาไว้ใช้กับไบร์ทตอนไหนก็ได้เลยนะ 🎫✨</p>
+                </div>
+                <img id="gacha-cat-img" src="cat-stand1.png" alt="Cat Guide" class="gacha-cat-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal หน้าต่างกระเป๋าเก็บคูปอง (Inventory) -->
+    <div id="inventory-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🎒 กระเป๋าเก็บคูปองรางวัล</h3>
+                <span class="close-modal-btn" onclick="closeInventoryModal()">✖</span>
+            </div>
+            <div class="modal-body">
+                <div id="inventory-list" class="inventory-grid">
+                    <p class="empty-inv-text">ยังไม่มีบัตรรางวัลเลย ไปสุ่มกาชากันนะ! 🎁</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 8: หน้าจอเวลาของเรา (Time Counter) ================= -->
+    <div id="time-screen" class="screen hidden">
+        <div class="time-container">
+            <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+
+            <div class="time-header">
+                <h2>⏰ เวลาของเราสองคน</h2>
+                <p>นับตั้งแต่ก้าวเดินร่วมทางกันมา...</p>
+            </div>
+
+            <!-- กล่องแสดงตัวเลขเวลาเรียลไทม์ -->
+            <div class="time-display-box">
+                <div class="time-unit">
+                    <span id="days-count">0</span>
+                    <label>วัน</label>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                    <span id="hours-count">00</span>
+                    <label>ชั่วโมง</label>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                    <span id="minutes-count">00</span>
+                    <label>นาที</label>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                    <span id="seconds-count">00</span>
+                    <label>วินาที</label>
+                </div>
+            </div>
+
+            <!-- น้องแมวประกบคู่พร้อมข้อความ -->
+            <div class="time-cat-area">
+                <div class="speech-bubble time-bubble">
+                    <p>ละเอียดยันวินาทีเลยเป็นไง 🐾✨</p>
+                </div>
+                <img id="time-cat-img" src="cat-stand1.png" alt="Cat Guide" class="time-cat-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 9: หน้าจอภาพความทรงจำ (Photo Gallery) ================= -->
+    <div id="photos-screen" class="screen hidden">
+        <div class="photos-container">
+            <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+
+            <div class="photos-header">
+                <h2>📸 ภาพความทรงจำของเรา</h2>
+                <span id="photo-counter">รูปที่ 1 / 8</span>
+            </div>
+
+            <!-- กล่องแสดงรูปภาพและข้อความด้านบน -->
+            <div class="photo-card-wrapper">
+                <div class="photo-title-bubble">
+                    <p id="photo-title-text">1. สเวนเซ่นครั้งแรกของเรา</p>
+                </div>
+                
+                <div class="photo-frame" id="photo-frame-box">
+                    <img id="current-photo" src="photo1.jpg" alt="Memory Photo">
+                </div>
+            </div>
+
+            <!-- ปุ่มกดเลื่อนรูป (ก่อนหน้า / ถัดไป) -->
+            <div class="photo-nav-buttons">
+                <button class="nav-arrow-btn" onclick="prevPhoto()">◀ รูปก่อนหน้า</button>
+                <button class="nav-arrow-btn" onclick="nextPhoto()">รูปถัดไป ▶</button>
+            </div>
+
+            <!-- น้องแมวยืนกระดิกหางอยู่ด้านล่าง -->
+            <div class="photos-cat-area">
+                <div class="speech-bubble photos-bubble">
+                    <p>ความทรงจำเต็มไปหมดเลย น่ารักจัง 🐾✨</p>
+                </div>
+                <img id="photos-cat-img" src="cat-stand1.png" alt="Cat Guide" class="photos-cat-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 10: หน้าจอความในใจ / สิ่งที่อยากให้ปรับปรุง (Letter & Feedback) ================= -->
+    <div id="letter-screen" class="screen hidden">
+        <div class="letter-container">
+            <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+
+            <div class="letter-header">
+                <h2>💌 ความในใจถึงคุณไบร์ท</h2>
+                <p>อยากให้ปรับปรุงอะไร หรือมีความในใจอะไร พิมพ์บอกไว้ได้เลยนะ...</p>
+            </div>
+
+            <!-- กล่องจดหมายสำหรับพิมพ์ข้อความ -->
+            <div class="letter-box-area">
+                <textarea id="feedback-input" placeholder="พิมพ์ข้อความความในใจ หรือสิ่งที่อยากบอก... (ระบบจะบันทึกให้อัตโนมัติเลยน้า) 💕" oninput="saveFeedback()"></textarea>
+                <div class="save-status-msg" id="save-status">💾 บันทึกข้อความเรียบร้อยแล้ว</div>
+            </div>
+
+            <!-- น้องแมวยืนกระดิกหางพร้อมข้อความแซว -->
+            <div class="letter-cat-area">
+                <div class="speech-bubble letter-bubble">
+                    <p>ถ้าไม่มีก็บอกรักไบร์ทก็ได้นะรออยู่อิๆ 🤭💖</p>
+                </div>
+                <img id="letter-cat-img" src="cat-stand1.png" alt="Cat Guide" class="letter-cat-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 11: หน้าจอไม่ดูถือว่าพลาด (Troll Button Screen) ================= -->
+<div id="troll-screen" class="screen hidden">
+    <div class="troll-container">
+        <button class="back-hub-btn" onclick="backToHub()">🏠 กลับหน้าหลัก</button>
+
+        <div class="troll-header">
+            <h2>⚡ ไม่ดูถือว่าพลาด!</h2>
+            <p>ความลับสุดยอดกำลังรออยู่...</p>
+        </div>
+
+        <!-- โซนปุ่มกดนับจำนวน 67 ครั้ง -->
+        <div class="troll-box-area">
+            <div class="click-counter-badge">
+                กดไปแล้ว: <span id="click-count">0</span> / 67 ครั้ง
+            </div>
+
+            <button id="troll-click-btn" class="troll-btn" onclick="handleTrollClick()">
+                👇 กดตรงนี้สิ! ✨
+            </button>
+
+            <!-- ข้อความเฉลยเมื่อกดครบ 67 ครั้ง -->
+            <div id="troll-result-box" class="troll-result-box hidden">
+                <p>😜 แบร่ไม่มีอะไรหรอกเอามาไว้หลอกแฟน 💖</p>
+            </div>
+        </div>
+
+        <!-- น้องแมวยืนกระดิกหางพร้อมข้อความ -->
+        <div class="troll-cat-area">
+            <div class="speech-bubble troll-bubble">
+                <p id="troll-cat-text">ไบร์ทมีอะไรจะบอกลองกดปุ่มให้ครบสิ 🐾✨</p>
+            </div>
+            <img id="troll-cat-img" src="cat-stand1.png" alt="Cat Guide" class="troll-cat-img">
+        </div>
+    </div>
+</div>
 
     <script src="script.js"></script>
 </body>
