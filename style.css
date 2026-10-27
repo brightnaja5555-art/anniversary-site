@@ -1,4 +1,4 @@
-/* กำหนดค่าเริ่มต้นและฟอนต์ */
+/* ================= CSS ฉบับสมบูรณ์ ================= */
 * {
     margin: 0;
     padding: 0;
@@ -13,30 +13,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-/* ควบคุมการแสดงผลแต่ละหน้า */
+/* ควบคุมการแสดงผลแต่ละหน้าให้เต็มจอและอยู่ตรงกลางเสมอ */
 .screen {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: opacity 0.8s ease;
+    overflow: hidden;
 }
 
 .screen.hidden {
     opacity: 0;
     pointer-events: none;
-    display: none;
+    display: none !important;
 }
 
 .screen.active {
     opacity: 1;
     pointer-events: auto;
-    display: flex;
+    display: flex !important;
 }
 
 /* ------------------- Step 1: PIN Box ------------------- */
@@ -98,11 +101,6 @@ body {
     letter-spacing: 5px;
 }
 
-#pin-input:focus {
-    border-color: #FF69B4;
-    box-shadow: 0 0 8px rgba(255, 105, 180, 0.3);
-}
-
 #pin-submit-btn {
     padding: 0 20px;
     background-color: #FF69B4;
@@ -153,14 +151,12 @@ body {
     filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.05));
 }
 
-/* กล่องคำพูดน้องแมว */
 .speech-bubble {
     background: rgba(255, 255, 255, 0.95);
     border: 3px solid #FFB6C1;
     border-radius: 20px;
-    padding: 16px 20px;
-    width: 280px;
-    max-width: 90vw;
+    padding: 18px 24px;
+    width: 320px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
     margin-bottom: 15px;
@@ -188,13 +184,13 @@ body {
 }
 
 #cat-text {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: #5D4037;
-    line-height: 1.5;
+    line-height: 1.6;
     font-weight: 500;
+    min-height: 48px;
 }
 
-/* ปุ่มทั่วไป */
 .next-btn {
     opacity: 1 !important;
     transform: none !important;
@@ -218,13 +214,12 @@ body {
 
 /* ------------------- Step 3: Gift Scene ------------------- */
 #gift-screen {
-    position: relative;
+    position: absolute;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     background: #fff0f5;
 }
 
@@ -232,10 +227,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50px;
+    gap: 60px;
     position: relative;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
 }
 
@@ -248,19 +244,18 @@ body {
 }
 
 .gift-wrapper.zoom-in {
-    transform: scale(1.1) translateY(-10px);
+    transform: scale(1.15) translateY(-15px);
 }
 
-/* กรอบข้อความบนกล่องของขวัญ */
 .box-speech-bubble {
     position: absolute;
-    bottom: 160px;
+    bottom: 175px;
     background: white;
     padding: 15px 20px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
     text-align: center;
-    width: 260px;
+    width: 280px;
     z-index: 10;
     border: 2px solid #ffb6c1;
     animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -284,7 +279,7 @@ body {
 }
 
 .box-speech-bubble p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #D81B60;
     font-weight: 600;
     margin-bottom: 10px;
@@ -296,7 +291,6 @@ body {
     100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ปุ่มในกล่องข้อความบนกล่อง */
 #gift-next-btn {
     opacity: 0;
     transform: translateY(10px);
@@ -313,7 +307,6 @@ body {
     display: inline-block !important;
 }
 
-/* กล่องของขวัญ */
 .gift-box {
     cursor: pointer;
     animation: wiggle 1.8s ease-in-out infinite;
@@ -321,7 +314,7 @@ body {
 }
 
 .gift-box img {
-    width: 130px;
+    width: 150px;
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
 }
@@ -339,7 +332,6 @@ body {
     cursor: default;
 }
 
-/* น้องแมวไกด์ประจำการข้างกล่อง */
 .cat-guide-container {
     display: flex;
     flex-direction: column;
@@ -349,7 +341,7 @@ body {
 }
 
 .cat-guide-container img {
-    width: 130px;
+    width: 140px;
     height: auto;
 }
 
@@ -374,37 +366,149 @@ body {
     50% { transform: translateY(-5px); }
 }
 
-/* ------------------- Responsive สำหรับมือถือ (Mobile Screen) ------------------- */
-@media screen and (max-width: 768px) {
-    .gift-scene-container {
-        flex-direction: column; /* เรียงเป็นแนวตั้งปกติ */
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        padding: 15px;
-    }
+/* ------------------- Step 4: Music Scene ------------------- */
+.music-scene-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
 
-    /* ให้กล่องของขวัญอยู่ด้านบน */
-    .gift-wrapper {
-        order: 1;
-    }
+.music-content-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
 
-    /*ให้น้องแมวลงมาอยู่ด้านล่างกล่องของขวัญ */
-    .cat-guide-container {
-        order: 2;
-    }
+.music-cat-img {
+    width: 140px;
+    height: auto;
+    margin-top: 15px;
+    user-select: none;
+    mix-blend-mode: darken;
+}
 
-    .gift-box img {
-        width: 120px; 
-    }
+@keyframes popBounce {
+    0% { opacity: 0; transform: scale(0.3) translateY(30px); }
+    60% { opacity: 1; transform: scale(1.08) translateY(-10px); }
+    80% { transform: scale(0.95) translateY(5px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
 
-    .cat-guide-container img {
-        width: 100px; 
-    }
+.pop-bounce {
+    animation: popBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 
-    /* ปรับตำแหน่งกล่องข้อความบนกล่องให้อยู่เหนือกล่องพอดี ไม่ออกไปชนแมวข้างล่าง */
-    .box-speech-bubble {
-        bottom: 150px;
-        width: 260px;
-    }
+/* ================= Step 5: Hub Screen (6 ไอคอน & จัดระเบียบไม่ให้แมวบัง) ================= */
+#hub-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    overflow: hidden;
+}
+
+.hub-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* จัดวาง 6 ไอคอนเป็นแบบ 2-2-2 (2 คอลัมน์ 3 แถว) */
+.icons-grid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    width: 100%;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 คอลัมน์ */
+    grid-template-rows: repeat(3, auto);     /* 3 แถว */
+    gap: 20px 40px; /* ระยะห่างระหว่างไอคอน แนวนอนและแนวตั้ง */
+    padding: 10px;
+    justify-items: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.icon-item:hover {
+    transform: scale(1.1);
+}
+
+.icon-circle {
+    width: 75px;
+    height: 75px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+    border: 3px solid #ffb6c1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.icon-circle img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.icon-item span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5D4037;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    white-space: nowrap;
+}
+
+/* ดึงน้องแมวลงมาชิดขอบล่างสุด ไม่ให้บังไอคอนแถวล่างสุด */
+.hub-cat-area {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+
+.hub-bubble {
+    width: 220px;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #D81B60;
+    animation: floatBubble 2s ease-in-out infinite;
+}
+
+.hub-cat-img {
+    width: 90px;
+    height: auto;
+    user-select: none;
+    mix-blend-mode: darken;
 }

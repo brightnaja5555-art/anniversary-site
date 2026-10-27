@@ -88,7 +88,6 @@ function startStandingAnimation() {
     }
 }
 
-// โฟลว์การเดินเข้าฉากตอนใส่พินถูก
 function startCatEntrance() {
     const catWrapper = document.querySelector(".cat-wrapper");
     const speechBubble = document.getElementById("speech-bubble");
@@ -111,7 +110,6 @@ function showDialogue(text) {
     if (catText) catText.textContent = text;
 }
 
-// ควบคุมบทสนทนาหน้าแรก
 function nextDialogue() {
     dialogueIndex++;
     if (dialogueIndex < dialogues.length) {
@@ -124,12 +122,11 @@ function nextDialogue() {
         if (nextBtn) {
             nextBtn.textContent = "ไปเปิดกล่องของขวัญกัน! ✨";
             nextBtn.disabled = false;
-            nextBtn.onclick = goToGiftScreen; // กดแล้วตัดเข้าหน้ากล่องของขวัญทันที
+            nextBtn.onclick = goToGiftScreen;
         }
     }
 }
 
-// สลับมาหน้ากล่องของขวัญทันที (วาปมา)
 function goToGiftScreen() {
     const mainContent = document.getElementById("main-content");
     const giftScreen = document.getElementById("gift-screen");
@@ -144,7 +141,6 @@ function goToGiftScreen() {
     }
 }
 
-// เมื่อคลิกเปิดกล่องของขวัญ
 function openGift() {
     const giftImg = document.getElementById("gift-img");
     const giftBox = document.getElementById("gift-box");
@@ -162,29 +158,24 @@ function openGift() {
 
     if (catBubble) catBubble.classList.add("hidden");
     if (giftWrapper) giftWrapper.classList.add("zoom-in");
-    
-    // แสดงกล่องข้อความ และมั่นใจว่าปุ่มซ่อนอยู่
     if (boxBubble) boxBubble.classList.remove("hidden");
     if (nextBtn) {
         nextBtn.classList.add("hidden");
         nextBtn.classList.remove("show");
     }
 
-    // 1. แสดงข้อความชุดแรก
     if (boxText) boxText.textContent = "🎉 Happy Anniversary นะครับ! ❤️";
     
-    // 2. หลังจากผ่านไป 5 วินาที เปลี่ยนเป็นข้อความชุดสุดท้าย
     setTimeout(() => {
         if (boxText) {
             boxText.textContent = "ขอบคุณที่คอยอยู่ข้างๆ และสร้างรอยยิ้มให้กันมาตลอดนะ ดีใจมากๆ เลยที่มีเธออยู่ในทุกๆ วัน ✨";
         }
         
-        // 3. รอต่ออีก 5 วินาทีหลังจากข้อความชุดสุดท้ายจบ ค่อยๆ เฟดปุ่มให้โผล่ขึ้นมา
         setTimeout(() => {
             if (nextBtn) {
-                nextBtn.classList.remove("hidden"); // เอา display: none ออกก่อน
+                nextBtn.classList.remove("hidden");
                 setTimeout(() => {
-                    nextBtn.classList.add("show");  // ค่อยๆ เฟดโผล่ขึ้นมา
+                    nextBtn.classList.add("show");
                 }, 50);
             }
         }, 5000);
@@ -192,7 +183,124 @@ function openGift() {
     }, 5000);
 }
 
-// ฟังก์ชันกดไปหน้าถัดไป (แกลเลอรีรูปภาพ)
-function goToNextStep() {
-    alert("ยอดเยี่ยมครับไบร์ท! เดี๋ยวเราจะพาไปทำสเตปแกลเลอรีรูปภาพต่อในขั้นตอนถัดไปนะ 🚀");
+// ================= Step 4 Logic: หรี่เพลงเก่า และสลับไปหน้าเพลงพิเศษ =================
+function goToMusicScreen() {
+    const bgMusic = document.getElementById("bg-music");
+    const giftScreen = document.getElementById("gift-screen");
+    const musicScreen = document.getElementById("music-screen");
+
+    if (bgMusic) {
+        let vol = bgMusic.volume;
+        const fadeOut = setInterval(() => {
+            if (vol > 0.03) {
+                vol -= 0.03;
+                bgMusic.volume = vol;
+            } else {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+                clearInterval(fadeOut);
+            }
+        }, 100);
+    }
+
+    if (giftScreen) {
+        giftScreen.classList.remove("active");
+        giftScreen.classList.add("hidden");
+    }
+    if (musicScreen) {
+        musicScreen.classList.remove("hidden");
+        musicScreen.classList.add("active");
+        startMusicCatAnimation();
+    }
+}
+
+function startMusicCatAnimation() {
+    const musicCatImg = document.getElementById("music-cat-img");
+    let frameIdx = 0;
+    setInterval(() => {
+        frameIdx = (frameIdx + 1) % catWalkFrames.length;
+        if (musicCatImg) {
+            musicCatImg.src = catWalkFrames[frameIdx];
+        }
+    }, 250);
+}
+
+// ================= Step 5 Logic: กด "ฟังสิ" -> แมวเดินซ้ายออกจอ -> โผล่มาหน้า 4 ไอคอน =================
+function startSpecialMusic() {
+    const specialMusic = document.getElementById("special-music");
+    const musicContentBox = document.querySelector(".music-content-box");
+    const musicCatImg = document.getElementById("music-cat-img");
+
+    if (specialMusic) {
+        specialMusic.volume = 0.25;
+        specialMusic.play().catch(err => console.log("Special music play error:", err));
+    }
+
+    // 1. ให้น้องแมวหันซ้าย/เดินออกไปทางซ้ายจนพ้นจอ
+    if (musicContentBox) {
+        // เปลี่ยนเป็นแอนิเมชันเดิน
+        let walkIdx = 0;
+        const walkInterval = setInterval(() => {
+            walkIdx = (walkIdx + 1) % catWalkFrames.length;
+            if (musicCatImg) musicCatImg.src = catWalkFrames[walkIdx];
+        }, 150);
+
+        // สั่งให้กล่องข้อความและตัวแมวสไลด์ออกซ้ายจนพ้นจอ
+        musicContentBox.style.transition = "transform 1.5s ease-in";
+        musicContentBox.style.transform = "translateX(-120vw)";
+
+        // 2. หลังจากแมวเดินพ้นจอแล้ว ให้เปลี่ยนฉากไปหน้า 4 ไอคอน
+        setTimeout(() => {
+            clearInterval(walkInterval);
+            const musicScreen = document.getElementById("music-screen");
+            const hubScreen = document.getElementById("hub-screen");
+
+            if (musicScreen) {
+                musicScreen.classList.remove("active");
+                musicScreen.classList.add("hidden");
+            }
+            if (hubScreen) {
+                hubScreen.classList.remove("hidden");
+                hubScreen.classList.add("active");
+                startHubCatAnimation(); // เริ่มสบัดหางที่หน้าหลัก
+            }
+        }, 1500);
+    }
+}
+
+// ฟังก์ชันให้น้องแมวที่หน้าหลักสบัดหางวนลูป
+function startHubCatAnimation() {
+    const hubCatImg = document.getElementById("hub-cat-img");
+    let frameIdx = 0;
+    setInterval(() => {
+        frameIdx = (frameIdx + 1) % catStandFrames.length;
+        if (hubCatImg) {
+            hubCatImg.src = catStandFrames[frameIdx];
+        }
+    }, 400);
+}
+
+// ฟังก์ชันชั่วคราวสำหรับกดไอคอนเกมปริศนา (เดี๋ยวเรามาทำรายละเอียดเกมกันต่อในสเตปถัดไป!)
+function openGameModal() {
+    alert("เย้! กำลังจะเปิดหน้า 'เกมทายใจ' ค้าบไบร์ท!");
+}
+
+function openPhotosModal() {
+    alert("เปิดหน้าภาพความทรงจำ");
+}
+
+function openTimeModal() {
+    alert("เปิดหน้าเช็คเวลาของเรา");
+}
+
+function openLetterModal() {
+    alert("เปิดหน้าความในใจ");
+}
+
+function openGachaModal() {
+    alert("🎁 กล่องสุ่มรางวัล: ต้องเล่นเกมตอบคำถามให้ถูกหมดทุกข้อก่อนนะถึงจะเปิดได้!");
+}
+
+function openTrollModal() {
+    alert("😈 แบร่! ตั้งใจเข้ามาอ่านเหรอ ไม่มีอะไรหรอก แค่จะหลอกเฉยๆ 555");
 }

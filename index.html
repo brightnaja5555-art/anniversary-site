@@ -10,9 +10,14 @@
 </head>
 <body>
 
-    <!-- เล่นเพลง MP3 เบื้องหลัง -->
+    <!-- เล่นเพลง MP3 เบื้องหลังเริ่มต้น -->
     <audio id="bg-music" loop preload="auto">
         <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- เพลงพิเศษรันยาวๆ -->
+    <audio id="special-music" loop preload="auto">
+        <source src="special-song.mp3" type="audio/mpeg">
     </audio>
 
     <!-- ================= Step 1: หน้าจอใส่รหัส PIN ================= -->
@@ -33,42 +38,109 @@
     <!-- ================= Step 2: น้องแมวไกด์เดินเข้าฉาก & บทสนทนา ================= -->
     <div id="main-content" class="screen hidden">
         <div class="cat-wrapper">
-            <!-- กล่องคำพูดน้องแมว -->
             <div id="speech-bubble" class="speech-bubble hidden">
                 <p id="cat-text"></p>
                 <button id="next-btn" class="next-btn" onclick="nextDialogue()">กดเพื่อไปต่อ ✨</button>
             </div>
-            
             <img id="cat-avatar" src="cat-walk1.png" alt="Cat Mascot" class="cat-img">
         </div>
     </div>
 
-    <!-- ================= Step 3: เปิดกล่องของขวัญ & น้องแมวไกด์ ================= -->
+    <!-- ================= Step 3: เปิดกล่องของขวัญ ================= -->
     <div id="gift-screen" class="screen hidden">
         <div class="gift-scene-container">
-            
-            <!-- ส่วนของกล่องของขวัญ -->
             <div class="gift-wrapper">
-                <!-- กรอบข้อความบนกล่องของขวัญ -->
                 <div id="box-speech-bubble" class="box-speech-bubble hidden">
                     <p id="box-cat-text">🎉 Happy Anniversary นะครับ! ❤️</p>
-                    <button id="gift-next-btn" class="next-btn hidden" onclick="goToNextStep()">ไปดูความทรงจำกัน ✨</button>
+                    <button id="gift-next-btn" class="next-btn hidden" onclick="goToMusicScreen()">ไปดูความทรงจำกัน ✨</button>
                 </div>
-
                 <div id="gift-box" class="gift-box" onclick="openGift()">
                     <img id="gift-img" src="gift-closed.png" alt="Gift Box">
                 </div>
             </div>
-
-            <!-- น้องแมวไกด์ยืนอยู่ด้านข้าง -->
             <div id="cat-guide-container" class="cat-guide-container">
                 <div id="cat-speech-bubble" class="speech-bubble">
                     <p>กดที่กล่องของขวัญสิ 🎁</p>
                 </div>
-                <!-- ขยายขนาดแมวในหน้านี้ให้ใหญ่ขึ้นนิดหน่อย -->
-                <img id="cat-character" src="cat-stand1.png" alt="Cat Guide" style="width: 140px;">
+                <img id="cat-character" src="cat-stand1.png" alt="Cat Guide">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 4: หน้าจอแนะนำเพลงพิเศษ ================= -->
+    <div id="music-screen" class="screen hidden">
+        <div class="music-scene-container">
+            <div class="music-content-box">
+                <div id="music-speech-bubble" class="speech-bubble pop-bounce">
+                    <p id="music-cat-text">ก่อนที่เราจะไปที่นั่นด้วยกัน... คุณไบร์ทเขาตั้งใจที่จะมอบเพลงนึงมาให้คุณ เธอจะฟังไหม? 🎶</p>
+                    <button id="play-special-btn" class="next-btn" onclick="startSpecialMusic()">ฟังสิ 💖</button>
+                </div>
+                <img id="music-cat-img" src="cat-walk1.png" alt="Cat Mascot" class="music-cat-img pop-bounce">
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Step 5: หน้าจอหลัก 6 ไอคอน & น้องแมวไกด์ ================= -->
+    <div id="hub-screen" class="screen hidden">
+        <div class="hub-container">
+            <!-- 6 ไอคอนหลัก -->
+            <div class="icons-grid">
+                <!-- 1. เกมทายใจ -->
+                <div class="icon-item" onclick="openGameModal()">
+                    <div class="icon-circle">
+                        <img src="game-icon.png" alt="Game Icon">
+                    </div>
+                    <span>เกมทายใจ</span>
+                </div>
+
+                <!-- 2. ภาพความทรงจำ -->
+                <div class="icon-item" onclick="openPhotosModal()">
+                    <div class="icon-circle">
+                        <img src="photo-icon.png" alt="Photo Icon">
+                    </div>
+                    <span>ภาพความทรงจำ</span>
+                </div>
+
+                <!-- 3. เวลาของเรา -->
+                <div class="icon-item" onclick="openTimeModal()">
+                    <div class="icon-circle">
+                        <img src="time-icon.png" alt="Time Icon">
+                    </div>
+                    <span>เวลาของเรา</span>
+                </div>
+
+                <!-- 4. ความในใจ (สิ่งที่อยากปรับปรุง) -->
+                <div class="icon-item" onclick="openLetterModal()">
+                    <div class="icon-circle">
+                        <img src="letter-icon.png" alt="Letter Icon">
+                    </div>
+                    <span>ความในใจ</span>
+                </div>
+
+                <!-- 5. กล่องสุ่มรางวัล (ปลดล็อกเมื่อตอบถูกหมด) -->
+                <div class="icon-item" onclick="openGachaModal()">
+                    <div class="icon-circle">
+                        <img src="gacha-icon.png" alt="Gacha Icon">
+                    </div>
+                    <span>กล่องสุ่ม 🎁</span>
+                </div>
+
+                <!-- 6. ปุ่มหลอก: ไม่กดถือว่าพลาด -->
+                <div class="icon-item" onclick="openTrollModal()">
+                    <div class="icon-circle">
+                        <img src="troll-icon.png" alt="Troll Icon">
+                    </div>
+                    <span>ห้ามกดเด็ดขาด!</span>
+                </div>
             </div>
 
+            <!-- น้องแมวอยู่ด้านล่างสุด ไม่ให้บังไอคอน -->
+            <div class="hub-cat-area">
+                <div class="speech-bubble hub-bubble">
+                    <p>ลองไปสำรวจแต่ละที่สิ 🐾</p>
+                </div>
+                <img id="hub-cat-img" src="cat-stand1.png" alt="Cat Guide" class="hub-cat-img">
+            </div>
         </div>
     </div>
 
